@@ -40,12 +40,12 @@ class ShowTypeAction extends AnAction {
       val selectionModel = Option(editor.getSelectionModel)
       selectionModel match {
         case Some(sm) if Option(sm.getSelectedText).isDefined => GhcModiTypeInfo.findTypeInfoForSelection(psiFile, sm) match {
-          case Some(ti) => HaskellEditorUtil.showHint(editor, ti.typeSignature)
+          case Some(ti) => HaskellEditorUtil.createInfoBallon(ti.typeSignature, editor)
           case None => HaskellEditorUtil.showHint(editor, "Could not determine type for selection")
         }
         case _ => Option(psiFile.findElementAt(offset)).flatMap(e => HaskellPsiHelper.findHaskellNamedElement(e)).foreach { psiElement =>
           GhcModiTypeInfo.findTypeInfoFor(psiFile, psiElement) match {
-            case Some(ti) => HaskellEditorUtil.showHint(editor, ti.typeSignature)
+            case Some(ti) => HaskellEditorUtil.createInfoBallon(ti.typeSignature, editor)
             case None => HaskellEditorUtil.showHint(editor, s"Could not determine type for ${StringUtil.escapeXml(psiElement.getText)}")
           }
         }

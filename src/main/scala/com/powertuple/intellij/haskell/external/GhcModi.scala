@@ -96,7 +96,7 @@ class GhcModi(val project: Project) extends ProjectComponent {
         try {
           val process = getEnvParameters match {
             case None => Process(p + " legacy-interactive", new File(project.getBasePath))
-            case Some(ep) => Process(p, new File(project.getBasePath), ep)
+            case Some(ep) => Process(p + " legacy-interactive", new File(project.getBasePath), ep)
           }
           process.run(
             new ProcessIO(
